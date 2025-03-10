@@ -1,0 +1,74 @@
+name: "Steven DeLeon"
+title: "Steven DeLeon | Portfolio"
+job_title: "Software Engineer &amp; <span class=\"gradient-text\">Designer</span>"
+blurb: "I create elegant, scalable solutions while specializing in Design &amp; Front-end development."
+current_position: "CGI"
+
+contact:
+  message: "I'm always open to discussing new projects, challenges, or opportunities to share knowledge. If you'd like to connect, feel free to reach out via email."
+  email: "stevendeleon2892@gmail.com"
+
+socials:
+  - name: linkedin
+    link: https://linkedin.com/in/steve-deleon
+  - name: github
+    link: https://github.com/Stevendeleon
+
+experience:
+  - start_date: "2022"
+    end_date: "Present"
+    position_title: "Software Engineer"
+    company_title: "CGI"
+    description: "Developed and maintained various applications for several clients/accounts. Focused on full-stack development, improving user experience, database and server management, API design & development and cloud provisioning. 
+    Collaborated with cross-functional teams to deliver high-quality software solutions."
+    skills:
+      - Go
+      - C#
+      - AWS
+      - SQL
+      - Bash
+      - Linux
+      - Agile
+      - CI/CD
+      - Unit Testing
+      - Vue.js
+      - React.js
+      - TypeScript
+  - start_date: "2021"
+    end_date: "2022"
+    position_title: "Front-End Developer | Software Engineer"
+    company_title: "Blue Cross Blue Shield"
+    description: "Engineered performant Vue.js applications with TypeScript, implementing complex healthcare interfaces
+     and data visualizations. Established efficient GraphQL data fetching patterns reducing API response times. 
+     Developed native iOS features using Swift while maintaining cross-platform consistency. 
+     Implemented automated CI/CD pipelines with Fastlane, significantly reducing deployment time and potential errors. 
+     Collaborated in an Agile environment to deliver pixel-perfect features that enhanced user experience in healthcare applications."
+    skills:
+      - Vue.js
+      - TypeScript
+      - JavaScript
+      - Fastlane
+      - Swift
+      - GraphQL
+      - Agile
+  - start_date: "2017"
+    end_date: "2021"
+    position_title: "Front-End Developer | Software Developer"
+    company_title: "Glitnir Ticketing"
+    description: "Led development of responsive web applications using PHP backend with modern JavaScript frontends. 
+    Architected and implemented full-stack solutions leveraging GCP cloud infrastructure. 
+    Developed and maintained cross-platform applications including Android mobile solutions. 
+    Automated several processes and flows with Go and Python."
+    skills:
+      - PHP
+      - Python
+      - Go
+      - GCP
+      - Bash
+      - Linux
+      - Android Development
+      - HTML/CSS
+      - JavaScript
+      - Vue.js
+      - jQuery
+      - Graphic Design

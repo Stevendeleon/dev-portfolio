@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Steven DeLeon | Portfolio</title>
+	<style>
+		:root {
+			 
+			--bg-color: #2E3440;
+			--text-color: #D8DEE9;
+			--heading-color: #ECEFF4;
+			--accent-color: #88C0D0;
+			--secondary-color: #81A1C1;
+			--card-bg: rgba(46, 52, 64, 0.8);
+			--card-border: rgba(136, 192, 208, 0.15);
+			--section-spacing: 4rem;
+			--blur-primary: rgba(136, 192, 208, 0.2);
+			--blur-secondary: rgba(129, 161, 193, 0.25);
+			--highlight-bg: rgba(136, 192, 208, 0.18);
+			--tag-bg: rgba(136, 192, 208, 0.12);
+			--sticky-bg: rgba(46, 52, 64, 0.9);
+
+			 
+			--link-glow: rgba(136, 192, 208, 0.3);
+			--card-hover-shadow: rgba(0, 0, 0, 0.7);
+			--card-hover-border: rgba(136, 192, 208, 0.2);
+			--date-bg: rgba(136, 192, 208, 0.1);
+			--tag-hover-bg: rgba(136, 192, 208, 0.25);
+		}
+
+		 
+		:root.light-mode {
+			--bg-color: #ECEFF4;
+			--text-color: #4C566A;
+			--heading-color: #2E3440;
+			--accent-color: #5E81AC;
+			--secondary-color: #88C0D0;
+			--card-bg: rgba(255, 255, 255, 0.85);
+			--card-border: rgba(94, 129, 172, 0.12);
+			--blur-primary: rgba(94, 129, 172, 0.15);
+			--blur-secondary: rgba(136, 192, 208, 0.2);
+			--highlight-bg: rgba(94, 129, 172, 0.1);
+			--tag-bg: rgba(94, 129, 172, 0.08);
+			--sticky-bg: rgba(236, 239, 244, 0.85);
+
+			 
+			--link-glow: rgba(94, 129, 172, 0.3);
+			--card-hover-shadow: rgba(76, 86, 106, 0.2);
+			--card-hover-border: rgba(94, 129, 172, 0.25);
+			--date-bg: rgba(94, 129, 172, 0.1);
+			--tag-hover-bg: rgba(94, 129, 172, 0.2);
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Manrope', 'Poppins', system-ui, sans-serif;
+			background-color: var(--bg-color);
+			color: var(--text-color);
+			line-height: 1.7;
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 1.5rem 0 1.5rem;
+			overflow-x: hidden;
+		}
+
+		.cursor-blur {
+			position: fixed;
+			width: 300px;
+			height: 300px;
+			border-radius: 50%;
+			background: radial-gradient(circle, var(--blur-primary), transparent 70%);
+			pointer-events: none;
+			transform: translate(-50%, -50%);
+			z-index: 9999;
+			opacity: 0;
+			transition: opacity 0.3s ease, width 0.2s ease, height 0.2s ease, background 0.3s ease;
+			mix-blend-mode: screen;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+			position: relative;
+			z-index: 1;
+		}
+
+		header {
+			padding-bottom: 1.5rem;
+		}
+
+		nav {
+			display: none;
+		}
+
+		h1 {
+			font-size: 2.5rem;
+			font-weight: 700;
+			color: var(--heading-color);
+			margin-bottom: 0.75rem;
+			letter-spacing: -0.025em;
+		}
+
+		h2 {
+			font-size: 1.25rem;
+			font-weight: 600;
+			color: var(--heading-color);
+			margin-bottom: 1rem;
+		}
+
+		.section-heading {
+			text-transform: uppercase;
+			font-size: 0.875rem;
+			font-weight: 800;
+			letter-spacing: 0.15em;
+			color: var(--heading-color);
+			margin-bottom: 1.5rem;
+			padding: 1.25rem 0;
+			position: relative;
+		}
+
+		 
+		@media (max-width: 1023px) {
+			.section-heading {
+				position: sticky;
+				top: 0;
+				background-color: var(--sticky-bg);
+				backdrop-filter: blur(10px);
+				z-index: 10;
+			}
+		}
+
+		 
+		.theme-toggle {
+			position: fixed;
+			bottom: 2rem;
+			right: 2rem;
+			width: 3rem;
+			height: 3rem;
+			border-radius: 50%;
+			background-color: var(--card-bg);
+			border: 1px solid var(--card-border);
+			color: var(--heading-color);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			z-index: 100;
+			transition: all 0.3s ease;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+		}
+
+		.theme-toggle:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+		}
+
+		.theme-toggle svg {
+			width: 1.5rem;
+			height: 1.5rem;
+			transition: transform 0.5s ease;
+		}
+
+		.theme-toggle:hover svg {
+			transform: rotate(45deg);
+		}
+
+		p {
+			margin-bottom: 1.25rem;
+		}
+
+		a {
+			color: var(--heading-color);
+			text-decoration: none;
+			font-weight: 500;
+			transition: color 0.2s, text-shadow 0.2s;
+			position: relative;
+		}
+
+		a:hover, a:focus {
+			color: var(--accent-color);
+			text-shadow: 0 0 8px var(--link-glow);
+		}
+
+		a::after {
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 1px;
+			bottom: -2px;
+			left: 0;
+			background-color: var(--accent-color);
+			transition: width 0.3s ease;
+		}
+
+		a:hover::after, a:focus::after {
+			width: 100%;
+		}
+
+		.social-links {
+			display: flex;
+			gap: 1.5rem;
+			margin-top: 2rem;
+		}
+
+		.social-icon {
+			width: 1.5rem;
+			height: 1.5rem;
+		}
+
+		@media (min-width: 1024px) {
+			.container {
+				flex-direction: row;
+				gap: 6rem;
+			}
+
+			header {
+				position: sticky;
+				top: 0;
+				height: 100vh;
+				width: 40%;
+				padding: 6rem 0;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+			}
+
+			main {
+				width: 60%;
+				padding: 6rem 0;
+				height: 100vh;
+				overflow-y: auto;
+				-ms-overflow-style: none;
+				scrollbar-width: none;
+
+				&::-webkit-scrollbar {
+					display: none;
+				}
+			}
+
+			nav {
+				display: block;
+				margin-top: 4rem;
+			}
+		}
+
+		nav ul {
+			list-style: none;
+		}
+
+		nav li {
+			margin-bottom: 1rem;
+		}
+
+		nav a {
+			display: flex;
+			align-items: center;
+			color: var(--text-color);
+			font-size: 0.875rem;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.1em;
+			transition: color 0.2s, transform 0.2s;
+		}
+
+		nav a:hover, nav a:focus {
+			color: var(--heading-color);
+			transform: translateX(5px);
+		}
+
+		nav a::before {
+			content: "";
+			display: block;
+			width: 0;
+			height: 1px;
+			background-color: var(--accent-color);
+			margin-right: 0.75rem;
+			transition: width 0.3s;
+		}
+
+		nav a:hover::before, nav a:focus::before {
+			width: 2rem;
+		}
+
+		nav a::after {
+			display: none;
+		}
+
+		section {
+			margin-bottom: var(--section-spacing);
+			scroll-margin-top: 2rem;
+		}
+
+		.experience-item, .project-item {
+			position: relative;
+			padding: 2rem;
+			margin-bottom: 2rem;
+			border-radius: 0.5rem;
+			transition: all 0.3s ease;
+			background-color: var(--card-bg);
+			backdrop-filter: blur(10px);
+			border: 1px solid var(--card-border);
+		}
+
+		.experience-item:hover, .project-item:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 30px -15px var(--card-hover-shadow);
+			border-color: var(--card-hover-border);
+		}
+
+		.date {
+			font-size: 0.875rem;
+			color: var(--accent-color);
+			font-weight: 500;
+			margin-bottom: 0.75rem;
+			display: inline-block;
+			padding: 0.25rem 0.75rem;
+			background-color: var(--date-bg);
+			border-radius: 4px;
+		}
+
+
+		.flex-layout {
+			display: flex;
+			flex-direction: column;
+		}
+
+		@media (min-width: 640px) {
+			.flex-layout {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 1rem;
+			}
+		}
+
+		.job-title {
+			font-weight: 700;
+			font-size: 1.25rem;
+			color: var(--heading-color);
+			margin-bottom: 0.5rem;
+		}
+
+		.company {
+			color: var(--accent-color);
+			font-weight: 600;
+		}
+
+		.tag-container {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			margin-top: 1rem;
+		}
+
+		.tag {
+			display: inline-block;
+			font-size: 0.75rem;
+			font-weight: 500;
+			background-color: var(--tag-bg);
+			color: var(--accent-color);
+			padding: 0.35rem 0.85rem;
+			border-radius: 4px;
+			transition: all 0.2s ease;
+		}
+
+		.tag:hover {
+			background-color: var(--tag-hover-bg);
+			transform: translateY(-2px);
+		}
+
+		.links {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1.5rem;
+			margin-top: 1.5rem;
+		}
+
+		.link {
+			display: inline-flex;
+			align-items: center;
+			font-size: 0.875rem;
+			color: var(--text-color);
+		}
+
+		.link:hover {
+			color: var(--accent-color);
+		}
+
+		.link svg {
+			width: 1rem;
+			height: 1rem;
+			margin-right: 0.5rem;
+		}
+
+		footer {
+			font-size: 0.875rem;
+			margin-top: 4rem;
+			padding-bottom: 4rem;
+			opacity: 0.7;
+		}
+
+		.project-image {
+			border-radius: 0.5rem;
+			width: 100%;
+			height: auto;
+			margin-bottom: 1.5rem;
+			object-fit: cover;
+			aspect-ratio: 16/9;
+			transition: transform 0.3s ease, filter 0.3s ease;
+			filter: grayscale(30%);
+		}
+
+		.project-item:hover .project-image {
+			transform: scale(1.02);
+			filter: grayscale(0%);
+		}
+
+		.project-title {
+			font-size: 1.5rem;
+			font-weight: 700;
+			color: var(--heading-color);
+			margin-bottom: 0.75rem;
+		}
+
+		.gradient-text {
+			background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+			display: inline;
+		}
+
+		.highlight {
+			position: relative;
+			display: inline-block;
+		}
+
+		.highlight::after {
+			content: '';
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			height: 30%;
+			width: 100%;
+			background-color: var(--highlight-bg);
+			z-index: -1;
+			transition: height 0.3s ease;
+		}
+
+		.highlight:hover::after {
+			height: 100%;
+		}
+</style>
+</head>
+<body>
+<div class="cursor-blur" id="cursorBlur"></div>
+
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark-icon">
+		<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+	</svg>
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="light-icon" style="display: none;">
+		<circle cx="12" cy="12" r="5"></circle>
+		<line x1="12" y1="1" x2="12" y2="3"></line>
+		<line x1="12" y1="21" x2="12" y2="23"></line>
+		<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+		<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+		<line x1="1" y1="12" x2="3" y2="12"></line>
+		<line x1="21" y1="12" x2="23" y2="12"></line>
+		<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+		<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+	</svg>
+</button>
+
+<div class="container">
+	<header>
+		<div>
+			<h1>Steven DeLeon</h1>
+			<h2>Software Engineer &amp; <span class="gradient-text">Designer</span></h2>
+			<p>I create elegant, scalable solutions while specializing in Design &amp; Front-end development.</p>
+
+			<div class="social-links">
+				<a href="https://github.com/Stevendeleon" target="_blank" aria-label="GitHub">
+					<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+						<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+					</svg>
+				</a>
+				<a href="https://linkedin.com/in/steve-deleon" target="_blank" aria-label="LinkedIn">
+					<svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+						<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+					</svg>
+				</a>
+			</div>
+
+			<nav>
+				<ul>
+					<li>
+						<a href="#about">About</a>
+					</li>
+					<li>
+						<a href="#experience">Experience</a>
+					</li>
+					<li>
+						<a href="#contact">Contact</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<main>
+		<section id="about">
+			<h2 class="section-heading">About</h2>
+			<p>
+				I'm a front-end leaning software engineer with a strong foundation in full-stack development.
+				My passion lies in crafting intuitive and performant user interfaces, while also understanding the
+				intricacies of backend architecture and cloud infrastructure.
+			</p>
+			<p>
+				Currently, I'm a Software Engineer at
+				<a href="https://www.cgi.com/en" target="_blank" class="highlight" style="font-weight: bold">CGI</a>,
+				where I focus on developing robust and engaging web applications. My work involves translating complex
+				requirements into seamless user experiences, and I'm always looking for ways to improve performance and accessibility.
+			</p>
+			<p>
+				My approach centers on creating clean, maintainable code and collaborative with others.
+				I believe in the power of well-designed front-ends to drive user engagement and solve real-world problems.
+				This philosophy has shaped my contributions across various projects, from dynamic web applications to interactive data visualizations.
+			</p>
+			<p>
+				Beyond my professional work, I enjoy staying up-to-date with the latest front-end technologies, trying
+				new ones, the occasional blogging, cooking, parenting and more!
+			</p>
+		</section>
+
+		<section id="experience">
+			<h2 class="section-heading">Experience</h2>
+
+		
+			<div class="experience-item">
+				<span class="date">2022 — Present</span>
+				<h3 class="job-title">Software Engineer <span class="company">@ CGI</span></h3>
+				<p>Developed and maintained various applications for several clients/accounts. Focused on full-stack development, improving user experience, database and server management, API design &amp; development and cloud provisioning. Collaborated with cross-functional teams to deliver high-quality software solutions.</p>
+				<div class="tag-container">
+				
+					<span class="tag">Go</span>
+				
+					<span class="tag">C#</span>
+				
+					<span class="tag">AWS</span>
+				
+					<span class="tag">SQL</span>
+				
+					<span class="tag">Bash</span>
+				
+					<span class="tag">Linux</span>
+				
+					<span class="tag">Agile</span>
+				
+					<span class="tag">CI/CD</span>
+				
+					<span class="tag">Unit Testing</span>
+				
+					<span class="tag">Vue.js</span>
+				
+					<span class="tag">React.js</span>
+				
+					<span class="tag">TypeScript</span>
+				
+				</div>
+			</div>
+		
+			<div class="experience-item">
+				<span class="date">2021 — 2022</span>
+				<h3 class="job-title">Front-End Developer | Software Engineer <span class="company">@ Blue Cross Blue Shield</span></h3>
+				<p>Engineered performant Vue.js applications with TypeScript, implementing complex healthcare interfaces and data visualizations. Established efficient GraphQL data fetching patterns reducing API response times. Developed native iOS features using Swift while maintaining cross-platform consistency. Implemented automated CI/CD pipelines with Fastlane, significantly reducing deployment time and potential errors. Collaborated in an Agile environment to deliver pixel-perfect features that enhanced user experience in healthcare applications.</p>
+				<div class="tag-container">
+				
+					<span class="tag">Vue.js</span>
+				
+					<span class="tag">TypeScript</span>
+				
+					<span class="tag">JavaScript</span>
+				
+					<span class="tag">Fastlane</span>
+				
+					<span class="tag">Swift</span>
+				
+					<span class="tag">GraphQL</span>
+				
+					<span class="tag">Agile</span>
+				
+				</div>
+			</div>
+		
+			<div class="experience-item">
+				<span class="date">2017 — 2021</span>
+				<h3 class="job-title">Front-End Developer | Software Developer <span class="company">@ Glitnir Ticketing</span></h3>
+				<p>Led development of responsive web applications using PHP backend with modern JavaScript frontends. Architected and implemented full-stack solutions leveraging GCP cloud infrastructure. Developed and maintained cross-platform applications including Android mobile solutions. Automated several processes and flows with Go and Python.</p>
+				<div class="tag-container">
+				
+					<span class="tag">PHP</span>
+				
+					<span class="tag">Python</span>
+				
+					<span class="tag">Go</span>
+				
+					<span class="tag">GCP</span>
+				
+					<span class="tag">Bash</span>
+				
+					<span class="tag">Linux</span>
+				
+					<span class="tag">Android Development</span>
+				
+					<span class="tag">HTML/CSS</span>
+				
+					<span class="tag">JavaScript</span>
+				
+					<span class="tag">Vue.js</span>
+				
+					<span class="tag">jQuery</span>
+				
+					<span class="tag">Graphic Design</span>
+				
+				</div>
+			</div>
+		
+		</section>
+
+		<section id="contact">
+			<h2 class="section-heading">Contact</h2>
+			<p>I&#39;m always open to discussing new projects, challenges, or opportunities to share knowledge. If you&#39;d like to connect, feel free to reach out via email.</p>
+			<p><a href="mailto:stevendeleon2892@gmail.com" class="highlight">stevendeleon2892@gmail.com</a></p>
+		</section>
+	</main>
+</div>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const cursorBlur = document.getElementById('cursorBlur');
+		cursorBlur.setAttribute('style', '');
+
+		document.addEventListener('mousemove', (e) => {
+			cursorBlur.style.opacity = '1';
+			cursorBlur.style.left = `${e.clientX}px`;
+			cursorBlur.style.top = `${e.clientY}px`;
+		});
+
+		document.addEventListener('mouseleave', () => {
+			cursorBlur.style.opacity = '0';
+		});
+
+		if ('ontouchstart' in window) {
+			cursorBlur.style.display = 'none';
+		}
+
+		const hoverableElements = document.querySelectorAll('a, .experience-item, .project-item, .tag');
+
+		hoverableElements.forEach(element => {
+			element.addEventListener('mouseenter', () => {
+				cursorBlur.style.width = '150px';
+				cursorBlur.style.height = '150px';
+				cursorBlur.style.background = 'radial-gradient(circle, var(--blur-secondary), transparent 70%)';
+			});
+
+			element.addEventListener('mouseleave', () => {
+				cursorBlur.style.width = '300px';
+				cursorBlur.style.height = '300px';
+				cursorBlur.style.background = 'radial-gradient(circle, var(--blur-primary), transparent 70%)';
+			});
+		});
+
+		const themeToggle = document.getElementById('themeToggle');
+		const darkIcon = themeToggle.querySelector('.dark-icon');
+		const lightIcon = themeToggle.querySelector('.light-icon');
+
+		const savedTheme = localStorage.getItem('theme');
+		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+		if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+			document.documentElement.classList.add('light-mode');
+			darkIcon.style.display = 'none';
+			lightIcon.style.display = 'block';
+		}
+
+		function toggleTheme() {
+			if (document.documentElement.classList.contains('light-mode')) {
+				
+				document.documentElement.classList.remove('light-mode');
+				localStorage.setItem('theme', 'dark');
+				darkIcon.style.display = 'block';
+				lightIcon.style.display = 'none';
+			}
+			else {
+				
+				document.documentElement.classList.add('light-mode');
+				localStorage.setItem('theme', 'light');
+				darkIcon.style.display = 'none';
+				lightIcon.style.display = 'block';
+			}
+		}
+
+		themeToggle.addEventListener('click', toggleTheme);
+
+	});
+</script>
+</body>
+</html>
