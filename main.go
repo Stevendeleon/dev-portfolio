@@ -3,7 +3,6 @@ package main
 import (
 	"html/template"
 	"log"
-	"net/http"
 	"os"
 
 	"gopkg.in/yaml.v3"
@@ -62,32 +61,11 @@ func main() {
 	}
 
 	err = generateOutputFile()
-	http.HandleFunc("/", renderPortfolio)
-
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	err = http.ListenAndServe(":"+port, nil)
 	if err != nil {
-		log.Fatal(err)
-	}
-}
-
-// For dev testing prior to generating the index.html
-func renderPortfolio(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
+		log.Fatalf("Error generating output file: %v", err)
 	}
 
-	err := tmpl.Execute(w, data)
-	if err != nil {
-		msg := http.StatusText(http.StatusInternalServerError)
-		log.Printf("template.Execute: %v", err)
-		http.Error(w, msg, http.StatusInternalServerError)
-	}
+	log.Println("Completed generating output file.")
 }
 
 func loadPortfolioData(filename string) (Portfolio, error) {
@@ -118,6 +96,5 @@ func generateOutputFile() error {
 		return err
 	}
 
-	log.Printf("Generated %s successfully", filename)
 	return nil
 }
