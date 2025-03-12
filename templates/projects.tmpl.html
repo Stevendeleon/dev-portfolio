@@ -1,0 +1,26 @@
+{{ define "projects" }}
+<section id="projects">
+    <h2 class="section-heading">Projects</h2>
+
+    {{ range .Projects }}
+    <div class="project-item">
+        <img class="project-image" src="{{.Image.Src }}" alt="{{ .Image.Alt }}" />
+        <h3 class="project-title">{{ .Name }}</h3>
+        <p>{{ .Description }}</p>
+        <div class="tag-container">
+            {{ range .Tags }}
+            <span class="tag">{{.}}</span>
+            {{ end }}
+        </div>
+        <div class="links">
+            {{ range .Links }}
+            <a href="{{ .Href }}" class="link" target="_blank">
+                {{ .Svg }}
+                <span>{{ .Label }}</span>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+    {{ end }}
+</section>
+{{ end }}

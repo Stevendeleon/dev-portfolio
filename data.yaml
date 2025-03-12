@@ -72,3 +72,46 @@ experience:
       - Vue.js
       - jQuery
       - Graphic Design
+
+projects:
+  - name: "Distributed Cache Framework"
+    description: "An open-source distributed caching framework designed for high-throughput applications. Features include intelligent data partitioning, automatic node discovery, and failure recovery with minimal data loss."
+    image:
+      src: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+      alt: "Distributed caching system dashboard"
+    tags:
+      - "Go"
+      - "gRPC"
+      - "CI/CD"
+      - "GCP"
+    links:
+      - label: "Demo"
+        href:  "#"
+        svg: |
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+  - name: "Poker Manager"
+    description: "A seamless way to manage poker tournaments for your home games."
+    image:
+      src: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+      alt: "Distributed caching system dashboard"
+    tags:
+      - "Go"
+      - "PostgresQL"
+      - "Deno"
+      - "CI/CD"
+      - "GCP"
+    links:
+      - label: "Demo"
+        href: "#"
+        svg: |
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>

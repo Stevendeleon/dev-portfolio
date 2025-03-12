@@ -17,6 +17,7 @@ type Portfolio struct {
 	Contact         Contact       `yaml:"contact"`
 	Socials         []Social      `yaml:"socials"`
 	Experience      []Experience  `yaml:"experience"`
+	Projects        []Project     `yaml:"projects"`
 }
 
 type Contact struct {
@@ -38,6 +39,21 @@ type Experience struct {
 	Skills      []string `yaml:"skills"`
 }
 
+type Project struct {
+	Name        string `yaml:"name"`
+	Description string `yaml:"description"`
+	Image       struct {
+		Src string `yaml:"src"`
+		Alt string `yaml:"alt"`
+	} `yaml:"image"`
+	Tags  []string `yaml:"tags"`
+	Links []struct {
+		Href  string        `yaml:"href"`
+		Svg   template.HTML `yaml:"svg"`
+		Label string        `yaml:"label"`
+	}
+}
+
 type templateData struct {
 	Title     string
 	Portfolio Portfolio
@@ -54,7 +70,7 @@ func main() {
 		log.Fatalf("Error loading portfolio data: %v", err)
 	}
 
-	tmpl = template.Must(template.ParseFiles("templates/base.html"))
+	tmpl = template.Must(template.ParseFiles("templates/base.html", "templates/projects.tmpl.html"))
 	data = templateData{
 		Title:     portfolio.Title,
 		Portfolio: portfolio,
