@@ -1,0 +1,14 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        @media (prefers-color-scheme: dark) {
+        .bg { fill: transparent; }
+        .text { fill: #f4f4f4; }
+        }
+        @media (prefers-color-scheme: light) {
+        .bg { fill: transparent; }
+        .text { fill: #333; }
+        }
+    </style>
+    <rect width="100%" height="100%" class="bg"/>
+    <text x="50%" y="58%" font-family="Arial, sans-serif" font-size="108" class="text" text-anchor="middle" dominant-baseline="middle">SD</text>
+</svg>

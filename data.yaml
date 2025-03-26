@@ -1,8 +1,12 @@
 name: "Steven DeLeon"
 title: "Steven DeLeon | Portfolio"
+url: "https://stevendeleon.com"
 job_title: "Software Engineer &amp; <span class=\"gradient-text\">Designer</span>"
 blurb: "I create elegant, scalable solutions while specializing in Design &amp; Front-end development."
 current_position: "CGI"
+meta:
+  keywords: "software engineer, front-end developer, full-stack developer, web developer, web design, portfolio, Steven DeLeon, CGI"
+  description: "Software Engineer &amp; Designer specializing in elegant, scalable solutions with expertise in front-end development and user experience."
 
 contact:
   message: "I'm always open to discussing new projects, challenges, or opportunities to share knowledge. If you'd like to connect, feel free to reach out via email."

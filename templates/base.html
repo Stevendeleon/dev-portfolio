@@ -4,6 +4,30 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{{ .Title }}</title>
+
+	<meta name="title" content="{{ .Title }}">
+	<meta name="description" content="{{ .Meta.Description }}">
+	<meta name="keywords" content="{{ .Meta.Keywords }}">
+	<meta name="author" content="{{ .Portfolio.Name }}">
+	<meta name="robots" content="index, follow">
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="{{ .Portfolio.Url }}">
+	<meta property="og:title" content="{{ .Title }}">
+	<meta property="og:description" content="Software Engineer & Designer specializing in elegant, scalable solutions with expertise in front-end development and user experience.">
+	<meta property="og:image" content="https://stevendeleon.com/images/profile-preview.png">
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="{{ .Portfolio.Url }}">
+	<meta property="twitter:title" content="{{ .Title }}">
+	<meta property="twitter:description" content="Software Engineer & Designer specializing in elegant, scalable solutions with expertise in front-end development and user experience.">
+	<meta property="twitter:image" content="https://stevendeleon.com/images/profile-preview.png">
+	<!-- Canonical URL -->
+	<meta rel="canonical" href="{{ .Portfolio.Url }}">
+
+	<link rel="icon" type="image/x-icon" href="/images/sd_initials.svg">
+	<!-- Use preload for critical assets -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<style>
 		:root {
 			--bg-color: #2E3440;
@@ -576,71 +600,181 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
-		const cursorBlur = document.getElementById('cursorBlur');
-		cursorBlur.setAttribute('style', '');
+		const localStorageUtility = {
+			get(key) {
+				return localStorage.getItem(key);
+			},
+			set(key, value) {
+				localStorage.setItem(key, value);
+			}
+		};
 
-		document.addEventListener('mousemove', (e) => {
-			cursorBlur.style.opacity = '1';
-			cursorBlur.style.left = `${e.clientX}px`;
-			cursorBlur.style.top = `${e.clientY}px`;
-		});
+		// Theme Manager Module
+		const ThemeManager = (() => {
+			const themeToggle = document.getElementById('themeToggle');
+			const darkIcon = themeToggle.querySelector('.dark-icon');
+			const lightIcon = themeToggle.querySelector('.light-icon');
+			const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+			const savedTheme = localStorageUtility.get('theme');
 
-		document.addEventListener('mouseleave', () => {
-			cursorBlur.style.opacity = '0';
-		});
+			const applyLightMode = () => {
+				document.documentElement.classList.add('light-mode');
+				darkIcon.style.display = 'none';
+				lightIcon.style.display = 'block';
+			};
 
-		if ('ontouchstart' in window) {
-			cursorBlur.style.display = 'none';
-		}
+			const applyDarkMode = () => {
+				document.documentElement.classList.remove('light-mode');
+				darkIcon.style.display = 'block';
+				lightIcon.style.display = 'none';
+			};
 
-		const hoverableElements = document.querySelectorAll('a, .experience-item, .project-item, .tag');
+			const toggleTheme = () => {
+				const isLightMode = document.documentElement.classList.contains('light-mode');
+				isLightMode
+						? applyDarkMode()
+						: applyLightMode();
+				localStorageUtility.set('theme', isLightMode
+						? 'dark'
+						: 'light'
+				);
+			};
 
-		hoverableElements.forEach(element => {
-			element.addEventListener('mouseenter', () => {
+			const initializeTheme = () => {
+				switch (savedTheme) {
+					case 'light':
+						applyLightMode();
+						break;
+					case 'dark':
+						applyDarkMode();
+						break;
+					default:
+						darkModeMediaQuery.matches
+								? applyDarkMode()
+								: applyLightMode();
+						break;
+				}
+			};
+
+			const handleSystemThemeChange = (e) => {
+				if (localStorageUtility.get('theme')) {
+					return;
+				}
+				e.matches
+						? applyDarkMode()
+						: applyLightMode();
+			};
+
+			const init = () => {
+				themeToggle.addEventListener('click', toggleTheme);
+				darkModeMediaQuery.addEventListener('change', handleSystemThemeChange);
+				initializeTheme();
+			};
+
+			return { init };
+		})();
+
+		const CursorManager = (() => {
+			const cursorBlur = document.getElementById('cursorBlur');
+			const hoverableElements = document.querySelectorAll('a, .experience-item, .project-item, .tag');
+
+			const updateCursorPosition = (e) => {
+				cursorBlur.style.opacity = '1';
+				cursorBlur.style.left = `${e.clientX}px`;
+				cursorBlur.style.top = `${e.clientY}px`;
+			};
+
+			const hideCursor = () => {
+				cursorBlur.style.opacity = '0';
+			};
+
+			const expandCursor = () => {
 				cursorBlur.style.width = '150px';
 				cursorBlur.style.height = '150px';
 				cursorBlur.style.background = 'radial-gradient(circle, var(--blur-secondary), transparent 70%)';
-			});
+			};
 
-			element.addEventListener('mouseleave', () => {
+			const resetCursor = () => {
 				cursorBlur.style.width = '300px';
 				cursorBlur.style.height = '300px';
 				cursorBlur.style.background = 'radial-gradient(circle, var(--blur-primary), transparent 70%)';
-			});
-		});
+			};
 
-		const themeToggle = document.getElementById('themeToggle');
-		const darkIcon = themeToggle.querySelector('.dark-icon');
-		const lightIcon = themeToggle.querySelector('.light-icon');
+			const initializeCursor = () => {
+				cursorBlur.setAttribute('style', '');
 
-		const savedTheme = localStorage.getItem('theme');
-		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				if ('ontouchstart' in window) {
+					cursorBlur.style.display = 'none';
+					return;
+				}
 
-		if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
-			document.documentElement.classList.add('light-mode');
-			darkIcon.style.display = 'none';
-			lightIcon.style.display = 'block';
-		}
+				document.addEventListener('mousemove', updateCursorPosition);
+				document.addEventListener('mouseleave', hideCursor);
 
-		function toggleTheme() {
-			if (document.documentElement.classList.contains('light-mode')) {
-				// dark mode
-				document.documentElement.classList.remove('light-mode');
-				localStorage.setItem('theme', 'dark');
-				darkIcon.style.display = 'block';
-				lightIcon.style.display = 'none';
-			}
-			else {
-				// light mode
-				document.documentElement.classList.add('light-mode');
-				localStorage.setItem('theme', 'light');
-				darkIcon.style.display = 'none';
-				lightIcon.style.display = 'block';
-			}
-		}
+				hoverableElements.forEach((element) => {
+					element.addEventListener('mouseenter', expandCursor);
+					element.addEventListener('mouseleave', resetCursor);
+				});
+			};
 
-		themeToggle.addEventListener('click', toggleTheme);
+			const init = () => {
+				initializeCursor();
+			};
+
+			return { init };
+		})();
+
+		ThemeManager.init();
+		CursorManager.init();
 	});
+</script>
+<script type="application/ld+json">
+	{
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "{{ .Portfolio.Name }}",
+  "jobTitle": "Software Engineer",
+  "url": "https://yourdomain.com",
+  "description": "Front-end leaning software engineer with a strong foundation in full-stack development, specializing in design and user experience.",
+  "email": "{{ .Portfolio.Contact.Email }}",
+  "sameAs": [
+    "{{ range .Portfolio.Socials }}{{ if eq .Name "github" }}{{ .URL }}{{ end }}{{ end }}",
+    "{{ range .Portfolio.Socials }}{{ if eq .Name "linkedin" }}{{ .URL }}{{ end }}{{ end }}"
+  ],
+  "knowsAbout": [
+    "Software Engineering",
+    "Front-end Development",
+    "UI/UX Design",
+    "Full-stack Development",
+	"Cloud Infrastructure",
+    "Go",
+    "Python",
+    "TypeScript",
+    "JavaScript",
+    "HTML",
+    "CSS",
+    "React",
+    "Vue.js"
+  ],
+  "workExperience": [
+	{{ $length := len .Portfolio.Experience }}
+    {{ range $index, $exp := .Portfolio.Experience }}
+    {
+      "@type": "OrganizationRole",
+      "roleName": "{{ $exp.Position }}",
+      "startDate": "{{ $exp.StartDate }}",
+      {{ if ne $exp.EndDate "Present" }}
+      "endDate": "{{ $exp.EndDate }}",
+      {{ end }}
+      "worksFor": {
+        "@type": "Organization",
+        "name": "{{ $exp.Company }}"
+      },
+      "description": "{{ $exp.Description }}"
+    }{{ if ne $index (sub $length 1) }},{{ end }}
+	{{ end }}
+	]
+  }
 </script>
 </body>
 </html>
