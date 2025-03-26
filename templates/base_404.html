@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Page Not Found | {{ .Portfolio.Name }}</title>
+    <!-- Primary Meta Tags -->
+    <meta name="description" content="Page not found. Return to {{ .Portfolio.Name }}'s portfolio to explore software engineering projects and skills.">
+    <meta name="robots" content="noindex, follow">
+    <meta name="author" content="{{ .Portfolio.Name }}">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://{{ .Domain }}/404.html">
+    <meta property="og:title" content="404 Page Not Found | {{ .Portfolio.Name }}">
+    <meta property="og:description" content="Page not found. Return to {{ .Portfolio.Name }}'s portfolio to explore software engineering projects and skills.">
+    <meta property="og:image" content="https://{{ .Domain }}/images/404-preview.jpg">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://{{ .Domain }}/404.html">
+    <meta property="twitter:title" content="404 Page Not Found | {{ .Portfolio.Name }}">
+    <meta property="twitter:description" content="Page not found. Return to {{ .Portfolio.Name }}'s portfolio to explore software engineering projects and skills.">
+    <meta property="twitter:image" content="https://{{ .Domain }}/images/404-preview.jpg">
+
+    <link rel="icon" type="image/x-icon" href="/images/sd_initials.svg">
+
+    <meta name="theme-color" content="#88C0D0">
+
+    <style>
+        :root {
+            --bg-color: #2E3440;
+            --text-color: #D8DEE9;
+            --heading-color: #ECEFF4;
+            --accent-color: #88C0D0;
+            --secondary-color: #81A1C1;
+            --card-bg: rgba(63, 73, 87, 0.8);
+            --card-border: rgba(136, 192, 208, 0.15);
+            --section-spacing: 4rem;
+            --blur-primary: rgba(136, 192, 208, 0.2);
+            --blur-secondary: rgba(129, 161, 193, 0.25);
+            --highlight-bg: rgba(136, 192, 208, 0.18);
+            --tag-bg: rgba(136, 192, 208, 0.12);
+            --sticky-bg: rgba(46, 52, 64, 0.9);
+            --link-glow: rgba(136, 192, 208, 0.3);
+            --card-hover-shadow: rgba(0, 0, 0, 0.7);
+            --card-hover-border: rgba(136, 192, 208, 0.2);
+            --date-bg: rgba(136, 192, 208, 0.1);
+            --tag-hover-bg: rgba(136, 192, 208, 0.25);
+        }
+
+        :root.light-mode {
+            --bg-color: #ECEFF4;
+            --text-color: #4C566A;
+            --heading-color: #2E3440;
+            --accent-color: #5E81AC;
+            --secondary-color: #88C0D0;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(94, 129, 172, 0.12);
+            --blur-primary: rgba(94, 129, 172, 0.15);
+            --blur-secondary: rgba(136, 192, 208, 0.2);
+            --highlight-bg: rgba(94, 129, 172, 0.1);
+            --tag-bg: rgba(94, 129, 172, 0.08);
+            --sticky-bg: rgba(236, 239, 244, 0.85);
+            --link-glow: rgba(94, 129, 172, 0.3);
+            --card-hover-shadow: rgba(76, 86, 106, 0.2);
+            --card-hover-border: rgba(94, 129, 172, 0.25);
+            --date-bg: rgba(94, 129, 172, 0.1);
+            --tag-hover-bg: rgba(94, 129, 172, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope', 'Poppins', system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 0 1.5rem;
+        }
+
+        .cursor-blur {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--blur-primary), transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease, width 0.2s ease, height 0.2s ease, background 0.3s ease;
+            mix-blend-mode: screen;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            line-height: 1;
+            letter-spacing: -0.05em;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--heading-color);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .sitemap-link {
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .error-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 480px) {
+            .error-options {
+                flex-direction: row;
+            }
+        }
+
+        .back-home {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--heading-color);
+            font-weight: 600;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .back-home:hover {
+            transform: translateY(-3px);
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-home:hover::after {
+            width: 0;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--heading-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .theme-toggle svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            transition: transform 0.5s ease;
+        }
+
+        .theme-toggle:hover svg {
+            transform: rotate(45deg);
+        }
+
+        a {
+            color: var(--heading-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s, text-shadow 0.2s;
+            position: relative;
+        }
+
+        a:hover, a:focus {
+            color: var(--accent-color);
+            text-shadow: 0 0 8px var(--link-glow);
+        }
+
+        a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        a:hover::after, a:focus::after {
+            width: 100%;
+        }
+
+        .highlight {
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 30%;
+            width: 100%;
+            background-color: var(--highlight-bg);
+            z-index: -1;
+            transition: height 0.3s ease;
+        }
+
+        .highlight:hover::after {
+            height: 100%;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline;
+        }
+
+        @media (max-width: 640px) {
+            .error-code {
+                font-size: 6rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="cursor-blur" id="cursorBlur"></div>
+
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark-icon">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="light-icon" style="display: none;">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+</button>
+
+<main role="main" class="container">
+    <div class="error-code" aria-hidden="true">404</div>
+    <h1>Page Not <span class="gradient-text">Found</span></h1>
+    <p>The page you are looking for does not exist or has been moved to a new location.</p>
+
+    <a href="/sitemap.xml" class="sitemap-link">View our sitemap</a>
+
+    <div class="error-options">
+        <a href="/" class="back-home">Back to Home</a>
+    </div>
+</main>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const cursorBlur = document.getElementById('cursorBlur');
+        const themeToggle = document.getElementById('themeToggle');
+        const darkIcon = themeToggle.querySelector('.dark-icon');
+        const lightIcon = themeToggle.querySelector('.light-icon');
+        const hoverableElements = document.querySelectorAll('a, .back-home');
+
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        function applyLightMode() {
+            document.documentElement.classList.add('light-mode');
+            darkIcon.style.display = 'none';
+            lightIcon.style.display = 'block';
+        }
+
+        function applyDarkMode() {
+            document.documentElement.classList.remove('light-mode');
+            darkIcon.style.display = 'block';
+            lightIcon.style.display = 'none';
+        }
+
+        function toggleTheme() {
+            const isLightMode = document.documentElement.classList.contains('light-mode');
+            isLightMode ? applyDarkMode() : applyLightMode();
+            localStorage.setItem('theme', isLightMode ? 'dark' : 'light');
+        }
+
+        function updateCursorPosition(e) {
+            cursorBlur.style.opacity = '1';
+            cursorBlur.style.left = `${e.clientX}px`;
+            cursorBlur.style.top = `${e.clientY}px`;
+        }
+
+        function hideCursor() {
+            cursorBlur.style.opacity = '0';
+        }
+
+        function expandCursor() {
+            cursorBlur.style.width = '150px';
+            cursorBlur.style.height = '150px';
+            cursorBlur.style.background = 'radial-gradient(circle, var(--blur-secondary), transparent 70%)';
+        }
+
+        function resetCursor() {
+            cursorBlur.style.width = '300px';
+            cursorBlur.style.height = '300px';
+            cursorBlur.style.background = 'radial-gradient(circle, var(--blur-primary), transparent 70%)';
+        }
+
+        function initializeCursor() {
+            cursorBlur.setAttribute('style', '');
+
+            if ('ontouchstart' in window) {
+                cursorBlur.style.display = 'none';
+                return;
+            }
+
+            document.addEventListener('mousemove', updateCursorPosition);
+            document.addEventListener('mouseleave', hideCursor);
+
+            hoverableElements.forEach(element => {
+                element.addEventListener('mouseenter', expandCursor);
+                element.addEventListener('mouseleave', resetCursor);
+            });
+        }
+
+        function initializeTheme() {
+            switch (savedTheme) {
+                case 'light':
+                    applyLightMode();
+                    break;
+                case 'dark':
+                    applyDarkMode();
+                    break;
+                default:
+                    prefersDark ? applyDarkMode() : applyLightMode();
+                    break;
+            }
+        }
+
+        darkModeMediaQuery.addEventListener('change', (e) => {
+            if (localStorage.getItem('theme')) {
+                return;
+            }
+            e.matches ? applyDarkMode() : applyLightMode();
+        });
+
+        themeToggle.addEventListener('click', toggleTheme);
+
+        initializeCursor();
+        initializeTheme();
+    });
+</script>
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://{{ .Domain }}/"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Error Page"
+  }]
+}
+</script>
+</body>
+</html>
